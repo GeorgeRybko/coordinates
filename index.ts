@@ -14,12 +14,15 @@ import {
 import { Point2D, PointPolar, Point3D, PointSpherical } from "./types";
 
 const numPairs = 1000000;
-const range = 10;
+const range = 1000000;
 const pointPairs2D: [Point2D, Point2D][] = generatePointPairs2D(
   numPairs,
   range
 );
-const pointPairs3D = generatePointPairs3D(numPairs, range);
+const pointPairs3D: [Point3D, Point3D][] = generatePointPairs3D(
+  numPairs,
+  range
+);
 
 const pointPairsPolar: [PointPolar, PointPolar][] = pointPairs2D.map((pair) => [
   cartesianToPolar(pair[0]),
@@ -51,36 +54,36 @@ console.log(
   convertedBack3D
 );
 
-let timeMiliseconds = 0;
+let timeMilliseconds = 0;
 
-timeMiliseconds = trackFunctionTime(() => {
+timeMilliseconds = trackFunctionTime(() => {
   for (let i = 0; i < numPairs; i++) {
     distanceCartesian2D(pointPairs2D[i][0], pointPairs2D[i][1]);
   }
 });
 
-console.log(`Distance 2D: ${timeMiliseconds} milliseconds`);
+console.log(`Distance 2D: ${timeMilliseconds} milliseconds`);
 
-timeMiliseconds = trackFunctionTime(() => {
+timeMilliseconds = trackFunctionTime(() => {
   for (let i = 0; i < numPairs; i++) {
     distanceCartesian3D(pointPairs3D[i][0], pointPairs3D[i][1]);
   }
 });
 
-console.log(`Distance 3D: ${timeMiliseconds} milliseconds`);
+console.log(`Distance 3D: ${timeMilliseconds} milliseconds`);
 
-timeMiliseconds = trackFunctionTime(() => {
+timeMilliseconds = trackFunctionTime(() => {
   for (let i = 0; i < numPairs; i++) {
     distancePolar(pointPairsPolar[i][0], pointPairsPolar[i][1]);
   }
 });
 
-console.log(`Polar ${timeMiliseconds} milliseconds`);
+console.log(`Polar: ${timeMilliseconds} milliseconds`);
 
-timeMiliseconds = trackFunctionTime(() => {
+timeMilliseconds = trackFunctionTime(() => {
   for (let i = 0; i < numPairs; i++) {
     distanceSpherical(pointPairsSpherical[i][0], pointPairsSpherical[i][1]);
   }
 });
 
-console.log(`Spherical ${timeMiliseconds} milliseconds`);
+console.log(`Spherical: ${timeMilliseconds} milliseconds`);
